@@ -1,4 +1,5 @@
 from transaction import Transaction
+
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pss
@@ -9,7 +10,7 @@ class Wallet:
         self.private_key = RSA.generate(2048)
         self.public_key = self.private_key.publickey()
 
-    def sign_transaction(self, transaction):
+    def sign_transaction(self, transaction: Transaction) -> None:
         h = SHA256.new()
         
         h.update(transaction.sender)
@@ -18,7 +19,7 @@ class Wallet:
 
         transaction.signature = pss.new(self.private_key).sign(h)
     
-    def construct_transaction(self, reciever, ammount):
+    def construct_transaction(self, reciever: bytes, ammount: int) -> Transaction:
         t = Transaction(self.public_key.exportKey(), reciever, ammount)
         self.sign_transaction(t)
         return t

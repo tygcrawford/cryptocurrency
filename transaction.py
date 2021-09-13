@@ -4,14 +4,14 @@ from Crypto.Signature import pss
 
 
 class Transaction:
-    def __init__(self, sender, reciever, ammount):
-        self.sender = sender
-        self.reciever = reciever
-        self.ammount = ammount
+    def __init__(self, sender: bytes, reciever: bytes, ammount: int) -> None:
+        self.sender: bytes = sender
+        self.reciever: bytes = reciever
+        self.ammount: int = ammount
 
-        self.signature = None
+        self.signature: bytes = None
 
-    def compute_hash(self):
+    def compute_hash(self) -> str:
         h = SHA256.new()
 
         h.update(self.sender)
@@ -21,7 +21,7 @@ class Transaction:
 
         return h.hexdigest()
 
-    def verify_signature(self):
+    def verify_signature(self) -> bool:
         h = SHA256.new()
 
         h.update(self.sender)
