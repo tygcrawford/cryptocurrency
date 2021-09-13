@@ -16,5 +16,13 @@ from block import Block
 # t_temp.__dict__ = bc.chain[0].transactions[0]
 # print(t_temp.verify())
 
-b = Block([], '0', 5)
-b.calculate_hash()
+s = Wallet()
+r = Wallet()
+
+t = []
+
+for ammount in range(5):
+    t.append(s.construct_transaction(r.public_key.exportKey(), ammount))
+
+b = Block(t, '0', 5)
+print(b.compute_merkle_root())

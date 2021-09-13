@@ -1,4 +1,4 @@
-from hashlib import sha256
+from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pss
 
@@ -12,7 +12,7 @@ class Transaction:
         self.signature = None
 
     def compute_hash(self):
-        h = sha256()
+        h = SHA256.new()
 
         h.update(self.sender)
         h.update(self.reciever)
@@ -22,7 +22,7 @@ class Transaction:
         return h.hexdigest()
 
     def verify_signature(self):
-        h = sha256()
+        h = SHA256.new()
 
         h.update(self.sender)
         h.update(self.reciever)
